@@ -46,7 +46,7 @@ git init
 git add .
 git commit -m "Çelebi Turizm MVP"
 git branch -M main
-git remote add origin https://github.com/KULLANICIADI/celebitur.git
+git remote add origin https://github.com/enesevci240/celebitur.git
 git push -u origin main
 ```
 
@@ -58,14 +58,14 @@ git push -u origin main
 4. **Branch:** `main` / **Folder:** `/ (root)`
 5. **Save**
 
-Canlı URL: `https://KULLANICIADI.github.io/celebitur/`
+Canlı URL: `https://enesevci240.github.io/celebitur/`
 
-Push sonrası `js/config.js` içindeki `siteUrl` ve `sitemap.xml` / `robots.txt` / HTML canonical etiketlerindeki `KULLANICIADI` değerini gerçek GitHub kullanıcı adınızla güncelleyin.
+Push sonrası `js/config.js` içindeki `siteUrl` ve `sitemap.xml` / `robots.txt` / HTML canonical etiketlerindeki `enesevci240` değerini gerçek GitHub kullanıcı adınızla güncelleyin.
 
 ### 3. Özel Domain (Opsiyonel)
 
 1. **Settings** → **Pages** → **Custom domain**
-2. DNS: CNAME `www` → `KULLANICIADI.github.io`
+2. DNS: CNAME `www` → `enesevci240.github.io`
 
 ## Yapılandırma (`js/config.js`)
 
