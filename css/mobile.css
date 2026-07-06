@@ -1,0 +1,318 @@
+/* ============================================
+   Mobil Optimizasyonlar
+   ============================================ */
+
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+}
+
+body {
+  padding-bottom: calc(72px + var(--safe-bottom));
+}
+
+.container {
+  padding-left: max(clamp(16px, 4vw, 32px), var(--safe-left));
+  padding-right: max(clamp(16px, 4vw, 32px), var(--safe-right));
+}
+
+a,
+button,
+.btn,
+.hamburger,
+.tour-tab,
+.nav-link {
+  -webkit-tap-highlight-color: rgba(227, 23, 18, 0.12);
+}
+
+input,
+select,
+textarea,
+.form-control {
+  font-size: 16px;
+}
+
+@media (max-width: 992px) {
+  .header-inner {
+    gap: 10px;
+  }
+
+  .logo-text {
+    max-width: 42vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-header {
+    margin-bottom: 36px;
+  }
+
+  .section-title {
+    font-size: clamp(1.45rem, 5.5vw, 2rem);
+    word-wrap: break-word;
+  }
+
+  .section-subtitle {
+    font-size: 0.92rem;
+    padding: 0 4px;
+  }
+
+  .page-hero__title {
+    font-size: clamp(1.55rem, 6vw, 2.2rem);
+    padding: 0 4px;
+  }
+
+  .page-hero__subtitle {
+    font-size: 0.92rem;
+    padding: 0 8px;
+  }
+
+  .stats-section .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .stat-item {
+    padding: 18px 10px;
+  }
+
+  .stat-item__number {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+  }
+
+  .stat-item__label {
+    font-size: 0.8rem;
+  }
+
+  .testimonial-card {
+    padding: 22px 18px;
+  }
+
+  .testimonial-card__text {
+    font-size: 0.88rem;
+  }
+
+  .cta-banner__actions {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0 8px;
+  }
+
+  .cta-banner__actions .btn {
+    width: 100%;
+    max-width: none;
+  }
+
+  .contact-section .map-container {
+    order: -1;
+  }
+
+  .map-container {
+    min-height: 0;
+  }
+
+  .map-container iframe {
+    height: 260px;
+    min-height: 240px;
+  }
+
+  .contact-form-wrapper {
+    padding: 22px 18px;
+  }
+
+  .contact-info-list li {
+    font-size: 0.85rem;
+    word-break: break-word;
+  }
+
+  .footer {
+    padding-bottom: calc(16px + var(--safe-bottom));
+  }
+
+  .footer-bottom-links {
+    gap: 12px 16px;
+    font-size: 0.8rem;
+  }
+
+  .institution-card {
+    padding: 22px 16px;
+  }
+
+  .institution-card__name {
+    font-size: 0.9rem;
+  }
+
+  .vehicle-card__body,
+  .tour-card__body {
+    padding: 18px;
+  }
+
+  .vehicle-card__features {
+    gap: 6px;
+  }
+
+  .vehicle-card__feature {
+    font-size: 0.72rem;
+    padding: 5px 10px;
+  }
+
+  .team-card__photo {
+    height: 220px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --header-height: 60px;
+  }
+
+  .container {
+    padding-left: max(16px, var(--safe-left));
+    padding-right: max(16px, var(--safe-right));
+  }
+
+  .btn {
+    white-space: normal;
+    text-align: center;
+    line-height: 1.35;
+    padding: 12px 18px;
+  }
+
+  .btn--lg {
+    padding: 14px 20px;
+    font-size: 0.95rem;
+  }
+
+  .hero {
+    min-height: 85svh;
+    min-height: 85vh;
+    align-items: flex-end;
+  }
+
+  .hero__content {
+    padding-top: calc(var(--header-height) + 32px + var(--safe-top));
+    padding-bottom: 40px;
+    width: 100%;
+  }
+
+  .hero__badge {
+    font-size: 0.7rem;
+    padding: 7px 14px 7px 12px;
+    margin-bottom: 16px;
+  }
+
+  .hero__title {
+    font-size: 1.65rem;
+    margin-bottom: 14px;
+  }
+
+  .hero__title span {
+    display: inline;
+    margin-top: 0;
+  }
+
+  .hero__subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+  }
+
+  .features-bar {
+    margin-top: -24px;
+  }
+
+  .feature-box {
+    padding: 18px 14px;
+  }
+
+  .feature-box__icon {
+    width: 52px;
+    height: 52px;
+    font-size: 1.15rem;
+  }
+
+  .service-card__image {
+    height: 180px;
+  }
+
+  .service-card__icon {
+    top: 148px;
+  }
+
+  .service-card__body {
+    padding: 32px 18px 18px;
+  }
+
+  .about-preview__badge {
+    top: 10px;
+    right: 10px;
+    padding: 12px 14px;
+  }
+
+  .about-preview__badge-number {
+    font-size: 1.5rem;
+  }
+
+  .partners-marquee {
+    padding: 28px 0;
+  }
+
+  .partners-marquee__item {
+    min-width: 130px;
+    padding: 12px 20px;
+    font-size: 0.82rem;
+  }
+
+  .whatsapp-float {
+    width: 54px;
+    height: 54px;
+    right: max(14px, var(--safe-right));
+    bottom: calc(14px + var(--safe-bottom));
+  }
+
+  .tour-tabs {
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .tour-tab {
+    min-width: 0;
+    font-size: 0.85rem;
+    padding: 12px 14px;
+  }
+
+  .about-story__images img {
+    height: 160px;
+  }
+
+  .about-story__images img:first-child {
+    height: 200px;
+  }
+
+  .breadcrumb {
+    font-size: 0.82rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .logo-text {
+    font-size: 0.78rem;
+    max-width: 38vw;
+  }
+
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .hero__title {
+    font-size: 1.45rem;
+  }
+
+  .stats-section .grid-4 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
