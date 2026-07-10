@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://enesevci240.github.io/celebitur/sitemap.xml
+Sitemap: https://celebiturturizm.com/sitemap.xml

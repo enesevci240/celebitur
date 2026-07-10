@@ -60,19 +60,30 @@ function initSiteConfig() {
     el.setAttribute('href', whatsappUrl(msg));
     if (el.tagName === 'A') {
       el.setAttribute('target', '_blank');
-      el.setAttribute('rel', 'noopener');
+      el.setAttribute('rel', 'noopener noreferrer');
     }
   });
 
   document.querySelectorAll('[data-whatsapp-quote]').forEach(el => {
     el.setAttribute('href', whatsappUrl(SITE.whatsappQuoteMsg));
     el.setAttribute('target', '_blank');
-    el.setAttribute('rel', 'noopener');
+    el.setAttribute('rel', 'noopener noreferrer');
   });
 
   const contactForm = document.querySelector('[data-formspree]');
   if (contactForm) {
     contactForm.setAttribute('action', SITE.formspree);
+    if (SITE.formspree.includes('placeholder')) {
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+      });
+      contactForm.setAttribute('aria-disabled', 'true');
+      const submitBtn = contactForm.querySelector('[type="submit"]');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.title = 'Form henüz yapılandırılmamış';
+      }
+    }
   }
 }
 
@@ -143,25 +154,59 @@ function initMobileNavCta(navLinks) {
 
   const cta = document.createElement('div');
   cta.className = 'nav-mobile-cta';
-  cta.innerHTML = `
-    <a href="tel:${SITE.phoneTel}" class="btn btn--outline-dark btn--sm" data-phone-tel>
-      <i class="fas fa-phone" aria-hidden="true"></i> <span data-phone>${SITE.phone}</span>
-    </a>
-    <a href="${whatsappUrl(SITE.whatsappQuoteMsg)}" class="btn btn--accent btn--sm" target="_blank" rel="noopener">
-      <i class="fab fa-whatsapp" aria-hidden="true"></i> Teklif Al
-    </a>
-  `;
+
+  const phoneBtn = document.createElement('a');
+  phoneBtn.href = `tel:${SITE.phoneTel}`;
+  phoneBtn.className = 'btn btn--outline-dark btn--sm';
+  phoneBtn.setAttribute('data-phone-tel', '');
+  const phoneIcon = document.createElement('i');
+  phoneIcon.className = 'fas fa-phone';
+  phoneIcon.setAttribute('aria-hidden', 'true');
+  const phoneSpan = document.createElement('span');
+  phoneSpan.setAttribute('data-phone', '');
+  phoneSpan.textContent = SITE.phone;
+  phoneBtn.append(phoneIcon, ' ', phoneSpan);
+
+  const waBtn = document.createElement('a');
+  waBtn.href = whatsappUrl(SITE.whatsappQuoteMsg);
+  waBtn.className = 'btn btn--accent btn--sm';
+  waBtn.setAttribute('target', '_blank');
+  waBtn.setAttribute('rel', 'noopener noreferrer');
+  const waIcon = document.createElement('i');
+  waIcon.className = 'fab fa-whatsapp';
+  waIcon.setAttribute('aria-hidden', 'true');
+  waBtn.append(waIcon, ' Teklif Al');
+
+  cta.append(phoneBtn, waBtn);
   navLinks.appendChild(cta);
 }
 
-function initActiveNav() {
-  let currentPage = window.location.pathname.split('/').pop();
-  if (!currentPage || !currentPage.includes('.')) {
-    currentPage = 'index.html';
+function normalizePath(pathname) {
+  if (!pathname || pathname === '/') return '/';
+  let path = pathname.replace(/\/index\.html$/, '').replace(/\.html$/, '');
+  if (path.endsWith('/') && path.length > 1) {
+    path = path.slice(0, -1);
   }
+  return path || '/';
+}
+
+function initActiveNav() {
+  const current = normalizePath(window.location.pathname);
 
   document.querySelectorAll('.nav-link').forEach(link => {
-    if (link.getAttribute('href') === currentPage) {
+    const href = link.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('tel:') || href.startsWith('mailto:')) {
+      return;
+    }
+
+    let linkPath;
+    try {
+      linkPath = normalizePath(new URL(href, window.location.origin).pathname);
+    } catch {
+      return;
+    }
+
+    if (current === linkPath) {
       link.classList.add('active');
     }
   });
