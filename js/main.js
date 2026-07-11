@@ -1,5 +1,5 @@
 /**
- * Çelebi Turizm — Ana JavaScript
+ * Çelebi Tur — Ana JavaScript
  */
 
 document.addEventListener('DOMContentLoaded', () => {

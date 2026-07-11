@@ -1,5 +1,5 @@
 /**
- * Çelebi Turizm — Site yapılandırması
+ * Çelebi Tur — Site yapılandırması
  * İletişim ve konum bilgileri tek noktadan yönetilir.
  */
 const SITE = {
@@ -7,8 +7,8 @@ const SITE = {
   phoneTel: '+905426884211',
   email: 'enesevci240@gmail.com',
   whatsapp: '905426884211',
-  whatsappDefaultMsg: 'Merhaba, bilgi almak istiyorum.',
-  whatsappQuoteMsg: 'Merhaba, teklif almak istiyorum.',
+  whatsappDefaultMsg: 'Merhaba, öğrenci servisi veya personel taşımacılığı hakkında bilgi almak istiyorum.',
+  whatsappQuoteMsg: 'Merhaba, öğrenci servisi veya personel taşımacılığı için teklif almak istiyorum.',
   lat: 41.270361,
   lng: 36.317222,
   address: 'Samsun',
@@ -17,6 +17,7 @@ const SITE = {
   mapsLink: 'https://www.google.com/maps?q=41.270361,36.317222',
   formspree: 'https://formspree.io/f/xplaceholder',
   siteUrl: 'https://celebiturturizm.com',
-  siteName: 'Çelebi Turizm',
+  siteName: 'Çelebi Tur',
   hours: 'Pazartesi - Cumartesi: 08:00 - 18:00',
+  tagline: 'Yolumuz Güven, Yükümüz Gelecek.',
 };

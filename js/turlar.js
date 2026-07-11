@@ -1,5 +1,5 @@
 /**
- * Çelebi Turizm — Turlar Sekme Mantığı
+ * Çelebi Tur — Organizasyon sekme mantığı
  */
 
 document.addEventListener('DOMContentLoaded', () => {

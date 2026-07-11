@@ -1,5 +1,5 @@
 /**
- * Çelebi Turizm — Scroll Animations
+ * Çelebi Tur — Scroll Animations
  */
 
 document.addEventListener('DOMContentLoaded', () => {
