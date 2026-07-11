@@ -27,7 +27,7 @@ textarea,
 
 @media (max-width: 992px) {
   :root {
-    --mobile-gutter: 20px;
+    --mobile-gutter: 24px;
   }
 
   .container {
@@ -65,7 +65,12 @@ textarea,
 
 @media (max-width: 768px) {
   :root {
-    --mobile-gutter: 22px;
+    --mobile-gutter: 24px;
+  }
+
+  .hero__content.container {
+    padding-left: max(24px, var(--safe-left));
+    padding-right: max(24px, var(--safe-right));
   }
 
   .section {
@@ -107,11 +112,6 @@ textarea,
     line-height: 1.65;
   }
 
-  .hero__content {
-    /* container padding'i koru — kenara yapışmayı engelle */
-    box-sizing: border-box;
-  }
-
   .stats-section {
     padding: 40px 0;
   }
@@ -133,33 +133,9 @@ textarea,
     font-size: 0.78rem;
   }
 
-  /* Yorumlar: yatay kaydırma (masaüstü grid aynı kalır) */
-  .testimonials-row {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 14px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: var(--mobile-gutter);
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    margin-inline: calc(-1 * var(--mobile-gutter));
-    padding-inline: var(--mobile-gutter);
-    padding-bottom: 6px;
-  }
-
-  .testimonials-row::-webkit-scrollbar {
-    display: none;
-  }
-
-  .testimonials-row .testimonial-card {
-    flex: 0 0 min(82vw, 300px);
-    width: min(82vw, 300px);
-    max-width: none;
-    height: auto;
-    scroll-snap-align: start;
-    padding: 20px 16px;
+  /* Yorumlar: mobilde kompakt dikey liste, kenar boşluklu */
+  .section--alt .grid-3 .testimonial-card {
+    padding: 20px 18px;
   }
 
   .testimonial-card__text {
@@ -263,8 +239,13 @@ textarea,
 
 @media (max-width: 480px) {
   :root {
-    --mobile-gutter: 20px;
+    --mobile-gutter: 22px;
     --header-height: 60px;
+  }
+
+  .hero__content.container {
+    padding-left: max(22px, var(--safe-left));
+    padding-right: max(22px, var(--safe-right));
   }
 
   .btn {

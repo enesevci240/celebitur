@@ -51,7 +51,8 @@
   z-index: 2;
   max-width: 580px;
   margin-left: auto;
-  padding: calc(var(--header-height) + 56px) 0 clamp(72px, 10vw, 100px);
+  padding-top: calc(var(--header-height) + 56px);
+  padding-bottom: clamp(72px, 10vw, 100px);
   color: var(--color-white);
 }
 
