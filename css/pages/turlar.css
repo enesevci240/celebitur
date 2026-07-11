@@ -1,14 +1,16 @@
-/* Taşımacılık sayfası */
+/* Taşımacılık sayfası — mobile-first, flexbox */
 
 .transport-pillars {
   display: flex;
   flex-direction: column;
-  gap: clamp(28px, 4vw, 40px);
+  gap: clamp(24px, 4vw, 40px);
+  width: 100%;
 }
 
 .transport-pillar {
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   background: var(--color-white);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
@@ -17,25 +19,22 @@
   transition: box-shadow var(--transition), border-color var(--transition);
 }
 
-.transport-pillar:nth-child(even) {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-}
-
-.transport-pillar:nth-child(even) .transport-pillar__media {
-  order: 2;
-}
-
 .transport-pillar:hover {
   box-shadow: var(--shadow-md);
   border-color: rgba(227, 23, 18, 0.22);
 }
 
 .transport-pillar__media {
-  min-height: 280px;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
   overflow: hidden;
+  background: var(--color-bg-alt);
+  flex-shrink: 0;
 }
 
 .transport-pillar__media img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -50,7 +49,9 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(28px, 4vw, 40px);
+  padding: 22px 18px;
+  flex: 1;
+  min-width: 0;
 }
 
 .transport-pillar__eyebrow {
@@ -81,7 +82,7 @@
 }
 
 .transport-pillar__list {
-  margin: 0 0 22px;
+  margin: 0 0 20px;
   padding: 0;
   list-style: none;
   display: flex;
@@ -111,17 +112,21 @@
 .transport-pillar__body .btn {
   margin-top: auto;
   align-self: flex-start;
+  min-height: 44px;
 }
 
 .transport-extras {
-  gap: clamp(14px, 2.5vw, 20px);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  width: 100%;
 }
 
 .transport-extra {
   background: var(--color-white);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: 22px 20px;
+  padding: 20px 18px;
   height: 100%;
   transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
 }
@@ -159,72 +164,56 @@
   margin: 0;
 }
 
-/* Eski tur kartları (gerekirse) */
-.tour-tabs {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: clamp(28px, 4vw, 44px);
-  flex-wrap: wrap;
-  padding: 6px;
-  background: var(--color-bg-alt);
-  border-radius: var(--radius-md);
-  max-width: 480px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.tour-tab {
-  flex: 1;
-  min-width: 140px;
-  padding: 12px 20px;
-  font-family: var(--font-family);
-  font-size: 0.88rem;
-  font-weight: 700;
-  border: none;
-  border-radius: var(--radius-sm);
-  background: transparent;
-  color: var(--color-text-muted);
-  cursor: pointer;
-  transition: all var(--transition);
-  min-height: 48px;
-}
-
-.tour-tab.active {
-  background: var(--color-dark);
-  color: var(--color-white);
-}
-
-.tour-content {
-  display: none;
-}
-
-.tour-content.active {
-  display: block;
-}
-
-@media (max-width: 900px) {
-  .transport-pillar,
-  .transport-pillar:nth-child(even) {
-    grid-template-columns: 1fr;
+/* Tablet: 2 kolon ekstra kartlar */
+@media (min-width: 576px) {
+  .transport-pillar__body {
+    padding: 26px 24px;
   }
 
-  .transport-pillar:nth-child(even) .transport-pillar__media {
-    order: 0;
+  .transport-extras {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
+/* Desktop: yan yana görsel + metin */
+@media (min-width: 901px) {
+  .transport-pillar {
+    flex-direction: row;
+    align-items: stretch;
+    min-height: 340px;
+  }
+
+  .transport-pillar--reverse {
+    flex-direction: row-reverse;
   }
 
   .transport-pillar__media {
-    min-height: 200px;
-    aspect-ratio: 16 / 10;
+    flex: 1 1 48%;
+    width: auto;
+    max-width: 52%;
+    aspect-ratio: auto;
+    min-height: 340px;
+    align-self: stretch;
+  }
+
+  .transport-pillar__body {
+    flex: 1 1 52%;
+    padding: clamp(28px, 3.5vw, 40px);
+  }
+
+  .transport-extras {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(14px, 2.5vw, 20px);
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 380px) {
   .transport-pillar__body {
-    padding: 22px 18px;
+    padding: 18px 16px;
   }
 
   .transport-extra {
-    padding: 18px 16px;
+    padding: 16px 14px;
   }
 }

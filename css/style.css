@@ -223,16 +223,21 @@ ul {
   opacity: 0.55;
 }
 
-/* Animations */
+/* Animations — visible by default; hide only after JS marks ready */
 .animate-on-scroll {
-  opacity: 0;
-  transform: translateY(20px);
+  opacity: 1;
+  transform: none;
   transition: opacity 0.55s ease, transform 0.55s ease;
 }
 
-.animate-on-scroll.visible {
+html.js-anim .animate-on-scroll:not(.visible) {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+html.js-anim .animate-on-scroll.visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
 .text-accent {
@@ -280,7 +285,9 @@ ul {
     scroll-behavior: auto;
   }
 
-  .animate-on-scroll {
+  .animate-on-scroll,
+  html.js-anim .animate-on-scroll:not(.visible),
+  html.js-anim .animate-on-scroll.visible {
     opacity: 1;
     transform: none;
     transition: none;
