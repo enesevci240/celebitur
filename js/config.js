@@ -1,14 +1,47 @@
 /**
  * Çelebi Tur — Site yapılandırması
- * İletişim ve konum bilgileri tek noktadan yönetilir.
+ * İletişim bilgileri tek noktadan yönetilir.
  */
 const SITE = {
+  email: 'enesevci240@gmail.com',
+
+  /** Birincil (header) — şehirlerarası / transfer */
   phone: '0542 688 42 11',
   phoneTel: '+905426884211',
-  email: 'enesevci240@gmail.com',
-  whatsapp: '905426884211',
-  whatsappDefaultMsg: 'Merhaba, öğrenci servisi veya personel taşımacılığı hakkında bilgi almak istiyorum.',
-  whatsappQuoteMsg: 'Merhaba, öğrenci servisi veya personel taşımacılığı için teklif almak istiyorum.',
+
+  phones: {
+    intercity: {
+      id: 'intercity',
+      label: 'Şehirlerarası / Transfer',
+      hint: 'Gezi, transfer ve şehirlerarası ulaşım',
+      display: '0542 688 42 11',
+      tel: '+905426884211',
+      whatsapp: '905426884211',
+      msg: 'Merhaba, şehirlerarası ulaşım / transfer hakkında bilgi almak istiyorum.',
+    },
+    support: {
+      id: 'support',
+      label: 'Sorun / Destek',
+      hint: 'Servis sorunu veya acil durum',
+      display: '0545 121 28 55',
+      tel: '+905451212855',
+      whatsapp: '905451212855',
+      msg: 'Merhaba, bir sorun / destek talebi için yazıyorum.',
+    },
+    office: {
+      id: 'office',
+      label: 'Ofis',
+      hint: 'Sabit hat',
+      display: '0362 238 08 16',
+      tel: '+903622380816',
+      whatsapp: null,
+      msg: null,
+    },
+  },
+
+  whatsappDefaultMsg: 'Merhaba, bilgi almak istiyorum.',
+  whatsappQuoteMsg: 'Merhaba, şehirlerarası ulaşım / transfer için teklif almak istiyorum.',
+
   lat: 41.270361,
   lng: 36.317222,
   address: 'Samsun',

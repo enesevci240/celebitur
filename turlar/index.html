@@ -22,8 +22,8 @@
   <link rel="stylesheet" href="/css/style.css?v=20260712g">
   <link rel="stylesheet" href="/css/header.css?v=20260712i">
   <link rel="stylesheet" href="/css/footer.css?v=20260712h">
-  <link rel="stylesheet" href="/css/components.css?v=20260712g">
-  <link rel="stylesheet" href="/css/mobile.css?v=20260712g">
+  <link rel="stylesheet" href="/css/components.css?v=20260712n">
+  <link rel="stylesheet" href="/css/mobile.css?v=20260712n">
   <link rel="stylesheet" href="/css/pages/turlar.css?v=20260712g">
   <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/images/apple-touch-icon.png" sizes="180x180">
@@ -59,7 +59,7 @@
     <section class="page-hero">
       <div class="container">
         <h1 class="page-hero__title">Taşımacılık</h1>
-        <p class="page-hero__subtitle">Öğrenci servisi ve personel taşımacılığında güvenilir çözüm; gezi ve etkinlik ulaşımında da yanınızdayız.</p>
+        <p class="page-hero__subtitle">Öğrenci ve personel servisinin yanında şehirlerarası ulaşım, gezi ve etkinlik transferi de sunuyoruz.</p>
         <nav class="breadcrumb" aria-label="Breadcrumb">
           <a href="/">Ana Sayfa</a>
           <span>/</span>
@@ -115,8 +115,37 @@
       </div>
     </section>
 
-    <!-- Destekleyici hizmetler — tek akış, sekmesiz -->
+    <!-- Şehirlerarası / transfer — düzenli servisin yanında net görünür -->
     <section class="section section--alt">
+      <div class="container">
+        <div class="section-header animate-on-scroll">
+          <span class="section-label">Ayrıca</span>
+          <h2 class="section-title">Şehirlerarası ve <span>Transfer</span></h2>
+          <p class="section-subtitle">Grup ve kurumsal yolculuklar için şehirlerarası ulaşım, havalimanı / otogar transferi ve gezi taşımacılığı planlıyoruz.</p>
+        </div>
+
+        <div class="transport-extras">
+          <article class="transport-extra animate-on-scroll">
+            <div class="transport-extra__icon"><i class="fas fa-route" aria-hidden="true"></i></div>
+            <h3 class="transport-extra__title">Şehirlerarası Ulaşım</h3>
+            <p class="transport-extra__text">Şehirler arası grup taşımacılığı; konforlu araçlarla güvenli ve planlı yolculuk.</p>
+          </article>
+          <article class="transport-extra animate-on-scroll">
+            <div class="transport-extra__icon"><i class="fas fa-plane-departure" aria-hidden="true"></i></div>
+            <h3 class="transport-extra__title">Transfer</h3>
+            <p class="transport-extra__text">Havalimanı, otogar ve otel arası transfer; tek yön veya gidiş-dönüş.</p>
+          </article>
+          <article class="transport-extra animate-on-scroll">
+            <div class="transport-extra__icon"><i class="fas fa-suitcase-rolling" aria-hidden="true"></i></div>
+            <h3 class="transport-extra__title">Gezi Taşımacılığı</h3>
+            <p class="transport-extra__text">Günübirlik veya çok günlük gezi organizasyonlarında grup ulaşımı.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Destekleyici hizmetler — tek akış, sekmesiz -->
+    <section class="section">
       <div class="container">
         <div class="section-header animate-on-scroll">
           <span class="section-label">Kapsam</span>
@@ -162,7 +191,7 @@
     <section class="cta-banner">
       <div class="container animate-on-scroll">
         <h2 class="cta-banner__title">Taşımacılık Teklifi Alın</h2>
-        <p class="cta-banner__text">Öğrenci servisi, personel taşımacılığı veya etkinlik ulaşımı için size özel plan hazırlayalım.</p>
+        <p class="cta-banner__text">Öğrenci servisi, personel taşımacılığı, şehirlerarası ulaşım veya gezi / transfer için size özel plan hazırlayalım.</p>
         <div class="cta-banner__actions">
           <a href="#" class="btn btn--whatsapp btn--lg" target="_blank" rel="noopener noreferrer" data-whatsapp data-whatsapp-msg="Merhaba, öğrenci servisi veya personel taşımacılığı hakkında bilgi almak istiyorum.">
             <i class="fab fa-whatsapp"></i> WhatsApp ile Yazın
@@ -207,7 +236,7 @@
           <h4>İletişim</h4>
           <ul class="footer-contact">
             <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> <a href="#" data-maps-link target="_blank" rel="noopener noreferrer"><span data-address>Samsun</span></a></li>
-            <li><i class="fas fa-phone" aria-hidden="true"></i> <a href="#" data-phone-tel><span data-phone>0542 688 42 11</span></a></li>
+            <li hidden data-contact-phones-anchor></li>
             <li><i class="fas fa-envelope" aria-hidden="true"></i> <a href="#" data-email-link><span data-email>enesevci240@gmail.com</span></a></li>
             <li><i class="fas fa-clock" aria-hidden="true"></i> <span data-hours>Pazartesi - Cumartesi: 08:00 - 18:00</span></li>
           </ul>
@@ -223,13 +252,13 @@
     </div>
   </footer>
 
-  <a href="#" class="whatsapp-float" data-whatsapp aria-label="WhatsApp ile iletişime geçin">
+  <button type="button" class="whatsapp-float" data-whatsapp-chooser aria-label="WhatsApp ile iletişime geçin" aria-haspopup="dialog">
     <span class="whatsapp-float__tooltip">Bize Yazın</span>
-    <i class="fab fa-whatsapp"></i>
-  </a>
+    <i class="fab fa-whatsapp" aria-hidden="true"></i>
+  </button>
 
-  <script src="/js/config.js?v=20260712g"></script>
-  <script src="/js/main.js?v=20260712g"></script>
+  <script src="/js/config.js?v=20260712k"></script>
+  <script src="/js/main.js?v=20260712n"></script>
   <script src="/js/animations.js?v=20260712g"></script>
 </body>
 </html>

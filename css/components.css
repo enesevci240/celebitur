@@ -337,6 +337,9 @@
   font-size: 1.65rem;
   box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
   transition: transform var(--transition), box-shadow var(--transition);
+  border: none;
+  cursor: pointer;
+  padding: 0;
 }
 
 .whatsapp-float:hover {
@@ -346,6 +349,179 @@
 
 .whatsapp-float__tooltip {
   display: none;
+}
+
+.wa-chooser-root {
+  position: fixed;
+  inset: 0;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: max(16px, var(--safe-top)) 16px max(16px, var(--safe-bottom));
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.wa-chooser-root[hidden] {
+  display: none !important;
+}
+
+.wa-chooser-root:not([hidden]) {
+  display: flex;
+  pointer-events: auto;
+}
+
+.wa-chooser-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: rgba(17, 17, 17, 0.5);
+  cursor: pointer;
+}
+
+.wa-chooser {
+  position: relative;
+  z-index: 1;
+  width: min(400px, 100%);
+  max-height: calc(100% - 8px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: var(--color-white);
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-border);
+  padding: 18px 16px 16px;
+  box-sizing: border-box;
+  pointer-events: auto;
+}
+
+body.wa-chooser-open {
+  overflow: hidden;
+  touch-action: none;
+}
+
+body.wa-chooser-open .whatsapp-float {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.wa-chooser__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 28px 14px 0;
+}
+
+.wa-chooser__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+
+.wa-chooser__close:hover {
+  background: var(--color-bg-alt);
+  color: var(--color-text);
+}
+
+.wa-chooser__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wa-chooser__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.wa-chooser__item:hover {
+  border-color: rgba(37, 211, 102, 0.55);
+  background: rgba(37, 211, 102, 0.06);
+}
+
+.wa-chooser__item i {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: rgba(37, 211, 102, 0.12);
+  color: var(--color-whatsapp);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.wa-chooser__item--call i {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.wa-chooser__item strong {
+  display: block;
+  font-size: 0.88rem;
+  margin-bottom: 2px;
+}
+
+.wa-chooser__item small {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+.footer-contact__phone {
+  align-items: flex-start;
+}
+
+.footer-contact__phone-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.footer-contact__phone-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+.footer-contact__phone a {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.contact-info-list .footer-contact__phone-label {
+  color: var(--color-text-muted);
+  opacity: 1;
+}
+
+.contact-info-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
 }
 
 .cta-banner {
@@ -501,7 +677,38 @@ textarea.form-control {
     width: 52px;
     height: 52px;
     font-size: 1.5rem;
-    right: 16px;
+    right: max(16px, var(--safe-right));
     bottom: calc(16px + var(--safe-bottom));
+  }
+
+  .wa-chooser-root {
+    align-items: center;
+    padding: 20px 16px;
+    padding-bottom: max(20px, var(--safe-bottom));
+  }
+
+  .wa-chooser {
+    width: 100%;
+    max-height: min(78vh, 520px);
+    border-radius: 16px;
+    padding: 20px 16px 16px;
+  }
+
+  .wa-chooser__title {
+    font-size: 1.05rem;
+    margin-bottom: 16px;
+  }
+
+  .wa-chooser__item {
+    padding: 14px 12px;
+    min-height: 56px;
+  }
+
+  .wa-chooser__item strong {
+    font-size: 0.92rem;
+  }
+
+  .wa-chooser__item small {
+    font-size: 0.8rem;
   }
 }

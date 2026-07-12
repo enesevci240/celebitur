@@ -329,12 +329,56 @@ textarea,
 
   .partners-marquee {
     padding: 28px 0;
+    position: relative;
+  }
+
+  .partners-marquee::before,
+  .partners-marquee::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 36px;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .partners-marquee::before {
+    left: 0;
+    background: linear-gradient(90deg, var(--color-bg-alt), transparent);
+  }
+
+  .partners-marquee::after {
+    right: 0;
+    background: linear-gradient(270deg, var(--color-bg-alt), transparent);
   }
 
   .partners-marquee__item {
-    min-width: 130px;
-    padding: 12px 20px;
-    font-size: 0.82rem;
+    min-width: auto;
+    max-width: none;
+    white-space: nowrap;
+    padding: 12px 18px;
+    font-size: 0.8rem;
+  }
+
+  .cta-banner__title {
+    font-size: clamp(1.35rem, 6vw, 1.75rem);
+    padding: 0 4px;
+  }
+
+  .cta-banner__text {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    max-width: 28em;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-banner__actions .btn {
+    min-height: 48px;
+    justify-content: center;
+    white-space: normal;
+    text-align: center;
   }
 
   .whatsapp-float {
@@ -342,6 +386,40 @@ textarea,
     height: 54px;
     right: max(16px, var(--safe-right));
     bottom: calc(16px + var(--safe-bottom));
+  }
+
+  .wa-chooser-root {
+    align-items: center;
+    padding: 24px 16px;
+    padding-bottom: max(24px, var(--safe-bottom));
+  }
+
+  .wa-chooser {
+    width: 100%;
+    max-height: min(75vh, 480px);
+    border-radius: 16px;
+    padding: 20px 16px 16px;
+  }
+
+  .wa-chooser__list {
+    gap: 10px;
+  }
+
+  .wa-chooser__item {
+    padding: 14px 12px;
+  }
+
+  .footer-contact__phone-wrap {
+    min-width: 0;
+  }
+
+  .footer-contact__phone {
+    word-break: break-word;
+  }
+
+  .footer-brand p,
+  .footer-col a {
+    overflow-wrap: anywhere;
   }
 
   .tour-tabs {
