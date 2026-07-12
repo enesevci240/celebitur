@@ -29,10 +29,6 @@
   -webkit-backdrop-filter: blur(6px);
 }
 
-.header:not(.scrolled) .logo-text span {
-  color: var(--color-primary);
-}
-
 .header.scrolled {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px);
@@ -47,14 +43,6 @@
 
 .header.scrolled .nav-link:hover,
 .header.scrolled .nav-link.active {
-  color: var(--color-primary);
-}
-
-.header.scrolled .logo-text {
-  color: var(--color-text);
-}
-
-.header.scrolled .logo-text span {
   color: var(--color-primary);
 }
 
@@ -78,24 +66,83 @@
   min-width: 0;
 }
 
+.logo-full {
+  display: block;
+  height: 44px;
+  width: auto;
+  max-width: min(240px, 58vw);
+  object-fit: contain;
+  object-position: left center;
+  transition: filter var(--transition), opacity var(--transition);
+}
+
 .logo-icon {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   flex-shrink: 0;
+  object-fit: contain;
+  border-radius: 10px;
 }
 
 .logo-text {
-  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-  font-weight: 800;
+  position: relative;
+  display: inline-block;
+  font-family: 'Cinzel', Georgia, 'Times New Roman', serif;
+  font-size: clamp(0.72rem, 1.9vw, 0.9rem);
+  font-weight: 600;
   color: var(--color-white);
-  letter-spacing: -0.03em;
+  letter-spacing: 0.16em;
+  line-height: 1.1;
+  padding-bottom: 7px;
   transition: color var(--transition);
   white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.logo-text::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 3px;
+  height: 1.5px;
+  /* iki ayrı çizgi — ortada baklava için boşluk */
+  background: linear-gradient(
+    to right,
+    currentColor 0,
+    currentColor calc(50% - 8px),
+    transparent calc(50% - 8px),
+    transparent calc(50% + 8px),
+    currentColor calc(50% + 8px),
+    currentColor 100%
+  );
+}
+
+.logo-text::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 5px;
+  height: 5px;
+  background: currentColor;
+  transform: translateX(-50%) rotate(45deg);
+  z-index: 1;
 }
 
 .logo-text span {
+  color: inherit;
+}
+
+/* Hero üzerinde beyaz; kaydırınca (beyaz header) kırmızı */
+.header:not(.scrolled) .logo-text {
+  color: var(--color-white);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+}
+
+.header.scrolled .logo-text {
   color: var(--color-primary);
-  transition: color var(--transition);
+  text-shadow: none;
 }
 
 .nav {
@@ -380,12 +427,19 @@
 }
 
 @media (max-width: 480px) {
+  .logo-full {
+    height: 36px;
+    max-width: min(200px, 54vw);
+  }
+
   .logo-text {
-    font-size: 0.85rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
   }
 
   .logo-icon {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
+    border-radius: 9px;
   }
 }

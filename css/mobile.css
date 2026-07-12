@@ -44,9 +44,14 @@ textarea,
   }
 
   .logo-text {
-    max-width: 46vw;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    max-width: none;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  .logo-full {
+    max-width: min(220px, 52vw);
+    height: 40px;
   }
 
   .section {
@@ -369,9 +374,9 @@ textarea,
     --mobile-gutter: 18px;
   }
 
-  .logo-text {
-    font-size: 0.78rem;
-    max-width: 40vw;
+  .logo-full {
+    height: 32px;
+    max-width: min(170px, 48vw);
   }
 
   .logo-icon {

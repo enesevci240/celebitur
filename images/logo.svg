@@ -1,4 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
-  <rect width="48" height="48" rx="10" fill="#FFFFFF" stroke="#E8E8E8" stroke-width="1"/>
-  <text x="24" y="33" text-anchor="middle" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="28" font-weight="800" fill="#E31712">Ç</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 100" fill="none">
+  <g fill="#E31712">
+    <text x="46" y="72" text-anchor="middle" font-family="Georgia, 'Times New Roman', Times, serif" font-size="76" font-weight="700">Ç</text>
+    <text x="52" y="62" text-anchor="middle" font-family="Georgia, 'Times New Roman', Times, serif" font-size="44" font-weight="700">T</text>
+    <rect x="96" y="20" width="1.6" height="60"/>
+    <text x="116" y="55" font-family="Georgia, 'Times New Roman', Times, serif" font-size="30" font-weight="700" letter-spacing="0.2em">ÇELEBİ TUR</text>
+    <rect x="116" y="70" width="130" height="1.4"/>
+    <rect x="268" y="70" width="130" height="1.4"/>
+    <rect x="250" y="66.5" width="8.5" height="8.5" transform="rotate(45 254.25 70.75)"/>
+  </g>
 </svg>
