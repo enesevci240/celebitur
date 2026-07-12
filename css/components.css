@@ -476,6 +476,19 @@ body.wa-chooser-open .whatsapp-float {
   color: var(--color-primary);
 }
 
+.wa-chooser__item--back i {
+  background: var(--color-bg-alt);
+  color: var(--color-text-muted);
+}
+
+button.wa-chooser__item {
+  width: 100%;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  background: var(--color-white);
+}
+
 .wa-chooser__item strong {
   display: block;
   font-size: 0.88rem;

@@ -22,11 +22,24 @@ const SITE = {
     support: {
       id: 'support',
       label: 'Sorun / Destek',
-      hint: 'Servis sorunu veya acil durum',
+      hint: 'Servis sorunu veya acil durum — numara seçin',
+      msg: 'Merhaba, bir sorun / destek talebi için yazıyorum.',
+      /** İki mobil hat; kullanıcı birini seçer */
+      lines: [
+        {
+          display: '0545 121 28 55',
+          tel: '+905451212855',
+          whatsapp: '905451212855',
+        },
+        {
+          display: '0542 688 42 11',
+          tel: '+905426884211',
+          whatsapp: '905426884211',
+        },
+      ],
       display: '0545 121 28 55',
       tel: '+905451212855',
       whatsapp: '905451212855',
-      msg: 'Merhaba, bir sorun / destek talebi için yazıyorum.',
     },
     office: {
       id: 'office',

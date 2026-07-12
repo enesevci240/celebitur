@@ -14,9 +14,12 @@ function getPhone(key) {
   return SITE.phones && SITE.phones[key] ? SITE.phones[key] : null;
 }
 
-function whatsappUrl(message, phoneKey) {
+function whatsappUrl(message, phoneKey, whatsappOverride) {
   const entry = getPhone(phoneKey) || getPhone('intercity');
-  const number = (entry && entry.whatsapp) || SITE.phones.intercity.whatsapp;
+  const number =
+    whatsappOverride ||
+    (entry && entry.whatsapp) ||
+    SITE.phones.intercity.whatsapp;
   const text = encodeURIComponent(message || (entry && entry.msg) || SITE.whatsappDefaultMsg);
   return `https://wa.me/${number}?text=${text}`;
 }
@@ -131,27 +134,35 @@ function fillContactLists() {
     if (!ul) return;
 
     Object.values(SITE.phones).forEach((entry) => {
-      const li = document.createElement('li');
-      li.className = 'footer-contact__phone';
+      const lines =
+        Array.isArray(entry.lines) && entry.lines.length
+          ? entry.lines
+          : [{ display: entry.display, tel: entry.tel }];
 
-      const icon = document.createElement('i');
-      icon.className = 'fas fa-phone';
-      icon.setAttribute('aria-hidden', 'true');
+      lines.forEach((line, index) => {
+        const li = document.createElement('li');
+        li.className = 'footer-contact__phone';
 
-      const wrap = document.createElement('span');
-      wrap.className = 'footer-contact__phone-wrap';
+        const icon = document.createElement('i');
+        icon.className = 'fas fa-phone';
+        icon.setAttribute('aria-hidden', 'true');
 
-      const label = document.createElement('span');
-      label.className = 'footer-contact__phone-label';
-      label.textContent = entry.label;
+        const wrap = document.createElement('span');
+        wrap.className = 'footer-contact__phone-wrap';
 
-      const link = document.createElement('a');
-      link.href = `tel:${entry.tel}`;
-      link.textContent = entry.display;
+        const label = document.createElement('span');
+        label.className = 'footer-contact__phone-label';
+        label.textContent =
+          lines.length > 1 ? `${entry.label} ${index + 1}` : entry.label;
 
-      wrap.append(label, link);
-      li.append(icon, wrap);
-      ul.insertBefore(li, anchor);
+        const link = document.createElement('a');
+        link.href = `tel:${line.tel}`;
+        link.textContent = line.display;
+
+        wrap.append(label, link);
+        li.append(icon, wrap);
+        ul.insertBefore(li, anchor);
+      });
     });
 
     anchor.remove();
@@ -163,91 +174,22 @@ function initWhatsAppChooser() {
   if (!triggers.length) return;
 
   let root = document.querySelector('.wa-chooser-root');
-  let panel;
-  let backdrop;
 
   if (!root) {
     root = document.createElement('div');
     root.className = 'wa-chooser-root';
     root.hidden = true;
 
-    backdrop = document.createElement('button');
+    const backdrop = document.createElement('button');
     backdrop.type = 'button';
     backdrop.className = 'wa-chooser-backdrop';
     backdrop.setAttribute('aria-label', 'Kapat');
 
-    panel = document.createElement('div');
+    const panel = document.createElement('div');
     panel.className = 'wa-chooser';
     panel.setAttribute('role', 'dialog');
     panel.setAttribute('aria-modal', 'true');
-    panel.setAttribute('aria-label', 'WhatsApp iletişim konusu seçin');
-
-    const title = document.createElement('p');
-    title.className = 'wa-chooser__title';
-    title.id = 'wa-chooser-title';
-    title.textContent = 'Nasıl yardımcı olalım?';
     panel.setAttribute('aria-labelledby', 'wa-chooser-title');
-
-    const list = document.createElement('div');
-    list.className = 'wa-chooser__list';
-
-    const topics = [
-      {
-        key: 'intercity',
-        icon: 'fa-bus',
-        title: 'Şehirlerarası / Transfer',
-        desc: 'Gezi, transfer ve şehirlerarası ulaşım',
-      },
-      {
-        key: 'support',
-        icon: 'fa-headset',
-        title: 'Sorun / Destek',
-        desc: 'Servis sorunu veya acil durum',
-      },
-    ];
-
-    topics.forEach((topic) => {
-      const entry = getPhone(topic.key);
-      if (!entry || !entry.whatsapp) return;
-
-      const btn = document.createElement('a');
-      btn.className = 'wa-chooser__item';
-      btn.href = whatsappUrl(entry.msg, topic.key);
-      btn.target = '_blank';
-      btn.rel = 'noopener noreferrer';
-
-      const ic = document.createElement('i');
-      ic.className = `fas ${topic.icon}`;
-      ic.setAttribute('aria-hidden', 'true');
-
-      const textWrap = document.createElement('span');
-      const t = document.createElement('strong');
-      t.textContent = topic.title;
-      const d = document.createElement('small');
-      d.textContent = topic.desc;
-      textWrap.append(t, d);
-
-      btn.append(ic, textWrap);
-      list.appendChild(btn);
-    });
-
-    const office = getPhone('office');
-    if (office) {
-      const call = document.createElement('a');
-      call.className = 'wa-chooser__item wa-chooser__item--call';
-      call.href = `tel:${office.tel}`;
-      const ic = document.createElement('i');
-      ic.className = 'fas fa-phone';
-      ic.setAttribute('aria-hidden', 'true');
-      const textWrap = document.createElement('span');
-      const t = document.createElement('strong');
-      t.textContent = 'Ofisi Ara';
-      const d = document.createElement('small');
-      d.textContent = office.display;
-      textWrap.append(t, d);
-      call.append(ic, textWrap);
-      list.appendChild(call);
-    }
 
     const closeBtn = document.createElement('button');
     closeBtn.type = 'button';
@@ -255,16 +197,166 @@ function initWhatsAppChooser() {
     closeBtn.setAttribute('aria-label', 'Kapat');
     closeBtn.textContent = '×';
 
+    const title = document.createElement('p');
+    title.className = 'wa-chooser__title';
+    title.id = 'wa-chooser-title';
+
+    const list = document.createElement('div');
+    list.className = 'wa-chooser__list';
+
     panel.append(closeBtn, title, list);
     root.append(backdrop, panel);
     document.body.appendChild(root);
 
+    const makeItem = ({
+      href,
+      iconClass,
+      titleText,
+      descText,
+      isButton,
+      onClick,
+      callStyle,
+      backStyle,
+    }) => {
+      const el = document.createElement(isButton ? 'button' : 'a');
+      if (isButton) {
+        el.type = 'button';
+      } else {
+        el.href = href;
+        if (href && String(href).startsWith('https://wa.me')) {
+          el.target = '_blank';
+          el.rel = 'noopener noreferrer';
+        }
+      }
+      el.className =
+        'wa-chooser__item' +
+        (callStyle ? ' wa-chooser__item--call' : '') +
+        (backStyle ? ' wa-chooser__item--back' : '');
+      if (onClick) el.addEventListener('click', onClick);
+
+      const ic = document.createElement('i');
+      ic.className = iconClass;
+      ic.setAttribute('aria-hidden', 'true');
+
+      const textWrap = document.createElement('span');
+      const t = document.createElement('strong');
+      t.textContent = titleText;
+      const d = document.createElement('small');
+      d.textContent = descText;
+      textWrap.append(t, d);
+
+      el.append(ic, textWrap);
+      return el;
+    };
+
+    const showSupportLines = (support, lines) => {
+      title.textContent = 'Sorun / Destek — numara seçin';
+      list.replaceChildren();
+
+      list.appendChild(
+        makeItem({
+          isButton: true,
+          iconClass: 'fas fa-arrow-left',
+          titleText: 'Geri',
+          descText: 'Konu seçimine dön',
+          backStyle: true,
+          onClick: (e) => {
+            e.preventDefault();
+            showTopics();
+          },
+        })
+      );
+
+      lines.forEach((line, index) => {
+        list.appendChild(
+          makeItem({
+            href: whatsappUrl(support.msg, 'support', line.whatsapp),
+            iconClass: 'fab fa-whatsapp',
+            titleText: line.display,
+            descText: `WhatsApp ile yazın · Hat ${index + 1}`,
+          })
+        );
+      });
+    };
+
+    const showTopics = () => {
+      title.textContent = 'Nasıl yardımcı olalım?';
+      list.replaceChildren();
+
+      const intercity = getPhone('intercity');
+      if (intercity && intercity.whatsapp) {
+        list.appendChild(
+          makeItem({
+            href: whatsappUrl(intercity.msg, 'intercity'),
+            iconClass: 'fas fa-bus',
+            titleText: intercity.label,
+            descText: intercity.hint,
+          })
+        );
+      }
+
+      const support = getPhone('support');
+      if (support) {
+        const lines =
+          Array.isArray(support.lines) && support.lines.length
+            ? support.lines.filter((l) => l.whatsapp)
+            : support.whatsapp
+              ? [
+                  {
+                    display: support.display,
+                    tel: support.tel,
+                    whatsapp: support.whatsapp,
+                  },
+                ]
+              : [];
+
+        if (lines.length === 1) {
+          list.appendChild(
+            makeItem({
+              href: whatsappUrl(support.msg, 'support', lines[0].whatsapp),
+              iconClass: 'fas fa-headset',
+              titleText: support.label,
+              descText: lines[0].display,
+            })
+          );
+        } else if (lines.length > 1) {
+          list.appendChild(
+            makeItem({
+              isButton: true,
+              iconClass: 'fas fa-headset',
+              titleText: support.label,
+              descText: support.hint || 'Numara seçin',
+              onClick: (e) => {
+                e.preventDefault();
+                showSupportLines(support, lines);
+              },
+            })
+          );
+        }
+      }
+
+      const office = getPhone('office');
+      if (office) {
+        list.appendChild(
+          makeItem({
+            href: `tel:${office.tel}`,
+            iconClass: 'fas fa-phone',
+            titleText: 'Ofisi Ara',
+            descText: office.display,
+            callStyle: true,
+          })
+        );
+      }
+    };
+
     const close = () => {
       root.hidden = true;
       document.body.classList.remove('wa-chooser-open');
+      showTopics();
     };
 
     const open = () => {
+      showTopics();
       root.hidden = false;
       document.body.classList.add('wa-chooser-open');
     };
@@ -277,6 +369,7 @@ function initWhatsAppChooser() {
 
     root._close = close;
     root._open = open;
+    showTopics();
   }
 
   triggers.forEach((trigger) => {
