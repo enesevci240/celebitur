@@ -12,17 +12,17 @@ const SITE = {
   phones: {
     intercity: {
       id: 'intercity',
-      label: 'Şehirlerarası / Transfer',
+      label: 'Şehirlerarası, Gezi ve Ulaşım',
       hint: 'Gezi, transfer ve şehirlerarası ulaşım',
       display: '0542 688 42 11',
       tel: '+905426884211',
       whatsapp: '905426884211',
-      msg: 'Merhaba, şehirlerarası ulaşım / transfer hakkında bilgi almak istiyorum.',
+      msg: 'Merhaba, şehirlerarası ulaşım / gezi hakkında bilgi almak istiyorum.',
     },
     support: {
       id: 'support',
-      label: 'Sorun / Destek',
-      hint: 'Servis sorunu veya acil durum — numara seçin',
+      label: 'Sorun ve Destek Hattı',
+      hint: 'Servis sorunu veya acil durum',
       msg: 'Merhaba, bir sorun / destek talebi için yazıyorum.',
       /** İki mobil hat; kullanıcı birini seçer */
       lines: [
@@ -53,7 +53,7 @@ const SITE = {
   },
 
   whatsappDefaultMsg: 'Merhaba, bilgi almak istiyorum.',
-  whatsappQuoteMsg: 'Merhaba, şehirlerarası ulaşım / transfer için teklif almak istiyorum.',
+  whatsappQuoteMsg: 'Merhaba, şehirlerarası ulaşım / gezi için teklif almak istiyorum.',
 
   lat: 41.270361,
   lng: 36.317222,

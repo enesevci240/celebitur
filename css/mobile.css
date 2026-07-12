@@ -381,11 +381,21 @@ textarea,
     text-align: center;
   }
 
+  .floating-contact {
+    bottom: calc(16px + var(--safe-bottom));
+  }
+
+  .floating-contact--support {
+    right: max(16px, var(--safe-right));
+  }
+
+  .floating-contact--intercity {
+    left: max(16px, var(--safe-left));
+  }
+
   .whatsapp-float {
     width: 54px;
     height: 54px;
-    right: max(16px, var(--safe-right));
-    bottom: calc(16px + var(--safe-bottom));
   }
 
   .wa-chooser-root {
@@ -473,6 +483,18 @@ textarea,
 
   .feature-box {
     padding: 14px 8px;
+  }
+
+  .floating-contact__label {
+    max-width: 72px;
+    font-size: 0.6rem;
+    padding: 4px 7px;
+  }
+
+  .whatsapp-float {
+    width: 46px;
+    height: 46px;
+    font-size: 1.35rem;
   }
 }
 

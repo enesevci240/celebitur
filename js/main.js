@@ -139,7 +139,7 @@ function fillContactLists() {
           ? entry.lines
           : [{ display: entry.display, tel: entry.tel }];
 
-      lines.forEach((line, index) => {
+      lines.forEach((line) => {
         const li = document.createElement('li');
         li.className = 'footer-contact__phone';
 
@@ -152,8 +152,7 @@ function fillContactLists() {
 
         const label = document.createElement('span');
         label.className = 'footer-contact__phone-label';
-        label.textContent =
-          lines.length > 1 ? `${entry.label} ${index + 1}` : entry.label;
+        label.textContent = entry.label;
 
         const link = document.createElement('a');
         link.href = `tel:${line.tel}`;
@@ -249,37 +248,71 @@ function initWhatsAppChooser() {
       return el;
     };
 
-    const showSupportLines = (support, lines) => {
-      title.textContent = 'Sorun / Destek — numara seçin';
-      list.replaceChildren();
+    const getSupportLines = (support) =>
+      Array.isArray(support.lines) && support.lines.length
+        ? support.lines.filter((l) => l.whatsapp)
+        : support.whatsapp
+          ? [{ display: support.display, tel: support.tel, whatsapp: support.whatsapp }]
+          : [];
 
+    const appendOffice = () => {
+      const office = getPhone('office');
+      if (!office) return;
       list.appendChild(
         makeItem({
-          isButton: true,
-          iconClass: 'fas fa-arrow-left',
-          titleText: 'Geri',
-          descText: 'Konu seçimine dön',
-          backStyle: true,
-          onClick: (e) => {
-            e.preventDefault();
-            showTopics();
-          },
+          href: `tel:${office.tel}`,
+          iconClass: 'fas fa-phone',
+          titleText: 'Ofisi Ara',
+          descText: office.display,
+          callStyle: true,
         })
       );
-
-      lines.forEach((line, index) => {
-        list.appendChild(
-          makeItem({
-            href: whatsappUrl(support.msg, 'support', line.whatsapp),
-            iconClass: 'fab fa-whatsapp',
-            titleText: line.display,
-            descText: `WhatsApp ile yazın · Hat ${index + 1}`,
-          })
-        );
-      });
     };
 
-    const showTopics = () => {
+    /** Sadece şehirlerarası / gezi / ulaşım hattı — sol/sağ float butonlarından çağrılır */
+    const renderIntercity = () => {
+      title.textContent = 'Şehirlerarası, Gezi ve Ulaşım';
+      list.replaceChildren();
+
+      const intercity = getPhone('intercity');
+      if (intercity && intercity.whatsapp) {
+        list.appendChild(
+          makeItem({
+            href: whatsappUrl(intercity.msg, 'intercity'),
+            iconClass: 'fab fa-whatsapp',
+            titleText: 'WhatsApp ile Yazın',
+            descText: intercity.display,
+          })
+        );
+      }
+
+      appendOffice();
+    };
+
+    /** Sadece sorun / destek hattı — iki numaradan biri seçilir */
+    const renderSupport = () => {
+      title.textContent = 'Sorun ve Destek Hattı';
+      list.replaceChildren();
+
+      const support = getPhone('support');
+      if (support) {
+        getSupportLines(support).forEach((line) => {
+          list.appendChild(
+            makeItem({
+              href: whatsappUrl(support.msg, 'support', line.whatsapp),
+              iconClass: 'fab fa-whatsapp',
+              titleText: 'WhatsApp ile Yazın',
+              descText: line.display,
+            })
+          );
+        });
+      }
+
+      appendOffice();
+    };
+
+    /** Genel CTA'lar (Teklif Al, WhatsApp ile Yazın) — tüm hatlar tek listede */
+    const renderTopics = () => {
       title.textContent = 'Nasıl yardımcı olalım?';
       list.replaceChildren();
 
@@ -297,66 +330,37 @@ function initWhatsAppChooser() {
 
       const support = getPhone('support');
       if (support) {
-        const lines =
-          Array.isArray(support.lines) && support.lines.length
-            ? support.lines.filter((l) => l.whatsapp)
-            : support.whatsapp
-              ? [
-                  {
-                    display: support.display,
-                    tel: support.tel,
-                    whatsapp: support.whatsapp,
-                  },
-                ]
-              : [];
-
-        if (lines.length === 1) {
+        getSupportLines(support).forEach((line) => {
           list.appendChild(
             makeItem({
-              href: whatsappUrl(support.msg, 'support', lines[0].whatsapp),
+              href: whatsappUrl(support.msg, 'support', line.whatsapp),
               iconClass: 'fas fa-headset',
               titleText: support.label,
-              descText: lines[0].display,
+              descText: line.display,
             })
           );
-        } else if (lines.length > 1) {
-          list.appendChild(
-            makeItem({
-              isButton: true,
-              iconClass: 'fas fa-headset',
-              titleText: support.label,
-              descText: support.hint || 'Numara seçin',
-              onClick: (e) => {
-                e.preventDefault();
-                showSupportLines(support, lines);
-              },
-            })
-          );
-        }
+        });
       }
 
-      const office = getPhone('office');
-      if (office) {
-        list.appendChild(
-          makeItem({
-            href: `tel:${office.tel}`,
-            iconClass: 'fas fa-phone',
-            titleText: 'Ofisi Ara',
-            descText: office.display,
-            callStyle: true,
-          })
-        );
-      }
+      appendOffice();
     };
+
+    const renderers = {
+      intercity: renderIntercity,
+      support: renderSupport,
+      topics: renderTopics,
+    };
+
+    let lastMode = 'topics';
 
     const close = () => {
       root.hidden = true;
       document.body.classList.remove('wa-chooser-open');
-      showTopics();
     };
 
-    const open = () => {
-      showTopics();
+    const open = (mode) => {
+      lastMode = mode || 'topics';
+      (renderers[lastMode] || renderTopics)();
       root.hidden = false;
       document.body.classList.add('wa-chooser-open');
     };
@@ -369,14 +373,14 @@ function initWhatsAppChooser() {
 
     root._close = close;
     root._open = open;
-    showTopics();
   }
 
   triggers.forEach((trigger) => {
     trigger.addEventListener('click', (e) => {
       e.preventDefault();
+      const mode = trigger.getAttribute('data-wa-mode') || 'topics';
       if (root.hidden) {
-        root._open();
+        root._open(mode);
       } else {
         root._close();
       }
