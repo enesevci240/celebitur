@@ -224,6 +224,34 @@
   line-height: 1.55;
 }
 
+.stats-section {
+  background: var(--color-dark);
+  padding: clamp(48px, 6vw, 72px) 0;
+  position: relative;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.stats-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: var(--color-primary);
+  border-radius: 0 0 4px 4px;
+}
+
+.stats-section .container {
+  position: relative;
+  z-index: 1;
+}
+
+.stats-section .grid-4 {
+  gap: 8px;
+}
+
 .stat-item {
   text-align: center;
   padding: 20px 12px;
