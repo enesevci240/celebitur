@@ -72,7 +72,7 @@ Push sonrası `js/config.js` içindeki `siteUrl` ve `sitemap.xml` / `robots.txt`
 | Alan | Mevcut değer |
 |------|--------------|
 | Telefon | 0542 688 42 11 |
-| E-posta | enesevci240@gmail.com |
+| E-posta | info@celebiturturizm.com |
 | WhatsApp | 905426884211 |
 | Konum | Samsun (41.270361, 36.317222) |
 | Formspree | `xplaceholder` — henüz yapılandırılmadı |

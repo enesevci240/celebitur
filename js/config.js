@@ -3,7 +3,7 @@
  * İletişim bilgileri tek noktadan yönetilir.
  */
 const SITE = {
-  email: 'enesevci240@gmail.com',
+  email: 'info@celebiturturizm.com',
 
   /** Birincil (header) — şehirlerarası / transfer */
   phone: '0542 688 42 11',
