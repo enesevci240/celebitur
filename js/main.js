@@ -8,10 +8,83 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
   initActiveNav();
   initWhatsAppChooser();
+  initContactTracking();
 });
 
 function getPhone(key) {
   return SITE.phones && SITE.phones[key] ? SITE.phones[key] : null;
+}
+
+/** Cloudflare Zaraz — olaylar Zaraz Monitoring'de görünür (Web Analytics tıklama saymaz). */
+function trackContact(name, props) {
+  const payload = {};
+  if (props) {
+    Object.keys(props).forEach((key) => {
+      const value = props[key];
+      if (value == null || value === '') return;
+      payload[key] = String(value);
+    });
+  }
+  try {
+    if (window.zaraz && typeof window.zaraz.track === 'function') {
+      window.zaraz.track(name, payload);
+    }
+  } catch {
+    /* Zaraz yoksa (yerel önizleme) sessizce geç */
+  }
+}
+
+function contactTopicFromHref(href) {
+  const digits = String(href || '').replace(/\D/g, '');
+  if (!digits || typeof SITE === 'undefined' || !SITE.phones) return 'unknown';
+
+  const matches = (raw) => {
+    const n = String(raw || '').replace(/\D/g, '');
+    if (!n) return false;
+    const a = digits.slice(-10);
+    const b = n.slice(-10);
+    return a.length >= 10 && a === b;
+  };
+
+  return (
+    Object.keys(SITE.phones).find((key) => {
+      const entry = SITE.phones[key];
+      if (matches(entry.tel) || matches(entry.whatsapp)) return true;
+      return Array.isArray(entry.lines)
+        ? entry.lines.some((line) => matches(line.tel) || matches(line.whatsapp))
+        : false;
+    }) || 'unknown'
+  );
+}
+
+function initContactTracking() {
+  document.addEventListener(
+    'click',
+    (event) => {
+      const link = event.target.closest('a[href]');
+      if (!link) return;
+
+      const href = link.getAttribute('href') || '';
+      if (href.startsWith('tel:')) {
+        trackContact('phone_click', {
+          topic: contactTopicFromHref(href),
+          page: window.location.pathname,
+        });
+        return;
+      }
+      if (href.includes('wa.me')) {
+        trackContact('whatsapp_click', {
+          topic: contactTopicFromHref(href),
+          page: window.location.pathname,
+        });
+        return;
+      }
+      if (href.startsWith('mailto:')) {
+        trackContact('email_click', { page: window.location.pathname });
+      }
+    },
+    true
+  );
 }
 
 function whatsappUrl(message, phoneKey, whatsappOverride) {
@@ -380,6 +453,10 @@ function initWhatsAppChooser() {
       e.preventDefault();
       const mode = trigger.getAttribute('data-wa-mode') || 'topics';
       if (root.hidden) {
+        trackContact('contact_menu_open', {
+          topic: mode,
+          page: window.location.pathname,
+        });
         root._open(mode);
       } else {
         root._close();
